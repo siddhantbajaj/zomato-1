@@ -46,12 +46,12 @@ module Zomato
       ).parsed_response
       Cuisine.build(response, id)
     end
-    def categories
+    def collections
       response = Api.get(
-        '/categories', 
+        '/collections', 
         :query => {:city_id => id}
       ).parsed_response
-      Category.build(response, id)
+      Collection.build(response, id)
     end
     
   end
