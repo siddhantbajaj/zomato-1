@@ -4,11 +4,17 @@ module Zomato
     
     def initialize(key)
       @key = key
-      Api.headers 'X-Zomato-API-Key' => key
+      Api.headers 'user-key' => key
+      Api.headers 'Accept' => 'application/json'
     end
     
-    def cities
-      @cities ||= City.build(Api.get('/cities').parsed_response)
+    def cities(city)
+      puts "here"
+
+     
+      @options = { query: { q: city } }
+       puts Api.get('/cities',@options).parsed_response
+      @cities ||= City.build(Api.get('/cities', @options).parsed_response)
     end
     
     def locality(lat, lon)

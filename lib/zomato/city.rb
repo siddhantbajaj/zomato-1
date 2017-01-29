@@ -7,8 +7,8 @@ module Zomato
       
       def build(response)
         @cities ||=
-        response['cities'].collect do |city|
-          City.new(city['city'])
+        response['location_suggestions'].collect do |city|
+          City.new(city)
         end
       end
       
@@ -17,10 +17,10 @@ module Zomato
     def initialize(attributes)
       @id = attributes['id']
       @name = attributes['name']
-      @longitude = attributes['longitude']
-      @latitude = attributes['latitude']
-      @has_nightlife = attributes['has_nightlife'] == 1
-      @show_zones = attributes['show_zones'] == 1
+      # @longitude = attributes['longitude']
+      # @latitude = attributes['latitude']
+      # @has_nightlife = attributes['has_nightlife'] == 1
+      # @show_zones = attributes['show_zones'] == 1
     end
     
     def zones
@@ -45,6 +45,13 @@ module Zomato
         :query => {:city_id => id}
       ).parsed_response
       Cuisine.build(response, id)
+    end
+    def categories
+      response = Api.get(
+        '/categories', 
+        :query => {:city_id => id}
+      ).parsed_response
+      Category.build(response, id)
     end
     
   end
