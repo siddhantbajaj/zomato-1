@@ -1,7 +1,7 @@
 module Zomato
   class Collection
     
-    attr_reader :id, :name, :city_id
+    attr_reader :collection_id,:res_count,:image_ur,:url,:title,:description,:share_url,:city_id
     
     class << self
       def build(response, city_id)

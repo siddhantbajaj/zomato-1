@@ -53,6 +53,13 @@ module Zomato
       ).parsed_response
       Collection.build(response, id)
     end
+    def collections
+      response = Api.get(
+        '/establishments', 
+        :query => {:city_id => id}
+      ).parsed_response
+      Establishment.build(response, id)
+    end
     
   end
 end
