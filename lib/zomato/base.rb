@@ -19,7 +19,14 @@ module Zomato
     
     def locality(lat, lon)
       response = Api.get('/geocodes', :query => {:lat => lat, :lon => lon}).parsed_response
-      Locality.new(response['locality'])
+      Locality.new(response['location'])
+    end
+    def location(name)
+      response = Api.get('/locations', :query => {:query => name}).parsed_response
+       @locations ||=
+        response['location_suggestions'].collect do |location|
+          Location.new(location)
+        end
     end
     
   end
